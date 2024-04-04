@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+@model List<WebApplication1.Models.Booking> //khai báo 1 list bookings
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MaBooking</th>
+                <th scope="col">MaKh</th>
+                <th scope="col">MaLoai</th>
+                <th scope="col">NgayIN</th>
+                <th scope="col">NgayOut</th>
+                <th scope="col">Gia</th>
+                <th scope="col">Gia Goc</th>
+                <th scope="col">Gia Giam</th>
+                <th scope="col">MaNV</th>
+                <th scope="col">TrangThai</th>
+                <th scope="col">DatCoc</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var p in Model)
+            {
+                <tr>
+                    <td>@p.MaBooking</td>
+                    <td>@p.MaKh</td>
+                    <td>@p.MaLoai</td>
+                    <td>@p.NgayIn</td>
+                    <td>@p.NgayOut</td>
+                    <td>@p.Gia</td>
+                    <td>@p.GiaGoc</td>
+                    <td>@p.GiaGiam</td>
+                    <td>@p.MaNv</td>
+                    <td>@p.TrangThai</td>
+                    <td>@p.DatCoc</td>
+                </tr>
+            };
+        </tbody>
+    </table>
+</div>
