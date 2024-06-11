@@ -11,9 +11,9 @@ namespace WebApplication1.Models
         }
 
         public int MaTn { get; set; }
-        public int? MaLoai { get; set; }
+        public int MaLoai { get; set; }
         public string? Gia { get; set; }
-        public string? Đền { get; set; }
+        public string? Den { get; set; }
 
         public virtual ICollection<TienIchPhong> TienIchPhongs { get; set; }
     }

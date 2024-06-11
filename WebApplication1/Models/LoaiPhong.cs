@@ -9,6 +9,7 @@ namespace WebApplication1.Models
         {
             Bookings = new HashSet<Booking>();
             HinhAnhs = new HashSet<HinhAnh>();
+            Phongs = new HashSet<Phong>();
             TienIchPhongs = new HashSet<TienIchPhong>();
         }
 
@@ -23,6 +24,7 @@ namespace WebApplication1.Models
 
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<HinhAnh> HinhAnhs { get; set; }
+        public virtual ICollection<Phong> Phongs { get; set; }
         public virtual ICollection<TienIchPhong> TienIchPhongs { get; set; }
     }
 }

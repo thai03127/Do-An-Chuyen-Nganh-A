@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Models
 {
-    public partial class DichVu
+    public partial class Dichvu
     {
-        public DichVu()
+        public Dichvu()
         {
             QldichvuPhongs = new HashSet<QldichvuPhong>();
         }

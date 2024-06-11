@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Views.Home.BookingModel
+﻿@model IEnumerable<WebApplication1.Models.Booking> //khai báo 1 list bookings
 @{
 }
 
@@ -19,50 +19,10 @@
 </div>
 <!-- Page Header End -->
 <!-- Booking Start -->
-<div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="bg-white shadow" style="padding: 35px;">
-            <div class="row g-2">
-                <div class="col-md-10">
-                    <div class="row g-2">
-                        <div class="col-md-3">
-                            <div class="date" id="date1" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
-                                       placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="date" id="date2" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker" />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option selected>Adult</option>
-                                <option value="1">Adult 1</option>
-                                <option value="2">Adult 2</option>
-                                <option value="3">Adult 3</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option selected>Child</option>
-                                <option value="1">Child 1</option>
-                                <option value="2">Child 2</option>
-                                <option value="3">Child 3</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-primary w-100">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@await Component.InvokeAsync("BackGroundBooking");
 <!-- Booking End -->
-<!-- Booking Start -->
+
+<!-- Booking Main Start -->
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -116,30 +76,23 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <select class="form-select" id="select1">
-                                        <option value="1">Adult 1</option>
-                                        <option value="2">Adult 2</option>
-                                        <option value="3">Adult 3</option>
-                                    </select>
-                                    <label for="select1">Select Adult</label>
+                                    <input type="idnumber" class="form-control" id="idnumber" placeholder="Your ID number"> @* id == cccd *@
+                                    <label for="idnumber">Your ID number</label> @* id == cccd *@
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <select class="form-select" id="select2">
-                                        <option value="1">Child 1</option>
-                                        <option value="2">Child 2</option>
-                                        <option value="3">Child 3</option>
-                                    </select>
-                                    <label for="select2">Select Child</label>
+                                    <input type="phone" class="form-control" id="phone" placeholder="Your Phone">
+                                    <label for="phone">Your Phone</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select" id="select3">
-                                        <option value="1">Room 1</option>
-                                        <option value="2">Room 2</option>
-                                        <option value="3">Room 3</option>
+                                        <option value="1">Standard</option>
+                                        <option value="2">Superior</option>
+                                        <option value="3">Deluxe</option>
+                                        <option value="4">Suite</option>
                                     </select>
                                     <label for="select3">Select A Room</label>
                                 </div>
@@ -151,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                <button class="btn btn-primary w-100 py-3" type="submit">BOOK NOW</button>
                             </div>
                         </div>
                     </form>
@@ -160,4 +113,42 @@
         </div>
     </div>
 </div>
-<!-- Booking End -->
+<!-- Booking Main End -->
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MaBooking</th>
+                <th scope="col">MaKh</th>
+                <th scope="col">MaLoai</th>
+                <th scope="col">NgayIN</th>
+                <th scope="col">NgayOut</th>
+                <th scope="col">Gia</th>
+                <th scope="col">Gia Goc</th>
+                <th scope="col">Gia Giam</th>
+                <th scope="col">MaNV</th>
+                <th scope="col">TrangThai</th>
+                <th scope="col">DatCoc</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.MaBooking</td>
+                    <td>@p.MaKh</td>
+                    <td>@p.MaLoai</td>
+                    <td>@p.NgayIn</td>
+                    <td>@p.NgayOut</td>
+                    <td>@p.Gia</td>
+                    <td>@p.GiaGoc</td>
+                    <td>@p.GiaGiam</td>
+                    <td>@p.MaNv</td>
+                    <td>@p.TrangThai</td>
+                    <td>@p.DatCoc</td>
+                </tr>
+            };
+        </tbody>
+    </table>
+</div>

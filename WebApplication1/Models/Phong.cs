@@ -7,6 +7,7 @@ namespace WebApplication1.Models
     {
         public Phong()
         {
+            Checkins = new HashSet<Checkin>();
             QldichvuPhongs = new HashSet<QldichvuPhong>();
         }
 
@@ -14,6 +15,8 @@ namespace WebApplication1.Models
         public string? TenPhong { get; set; }
         public int? MaLoai { get; set; }
 
+        public virtual LoaiPhong? MaLoaiNavigation { get; set; }
+        public virtual ICollection<Checkin> Checkins { get; set; }
         public virtual ICollection<QldichvuPhong> QldichvuPhongs { get; set; }
     }
 }

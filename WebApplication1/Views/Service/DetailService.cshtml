@@ -1,0 +1,116 @@
+﻿
+@{
+    var serviceName = ViewBag.serviceName;
+    var serviceQuantity = ViewBag.serviceQuantity;
+}
+@model List<WebApplication1.Models.Phong>;
+
+<div class="container-xxl bg-white p-0">
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0" style="background-image: url('@Url.Content("~/images/carousel-1.jpg")');">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center pb-5">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">About Us</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Services</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@serviceName</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <!-- Booking Start -->
+    @await Component.InvokeAsync("BackGroundBooking");
+    <!-- Booking End -->
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h6 class="section-title text-start text-primary text-uppercase">Detail Service</h6>
+                    <h1 class="mb-4">Introduce about <span class="text-primary text-uppercase">@serviceName</span></h1>
+                    <h4>Description:</h4>
+                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <form>
+                            @* Quantity *@
+                            <div class="col-md-6">
+                                <h4>Quantity: </h4>
+                                <h5 style="color:chocolate">@serviceQuantity </h5>
+                            </div>
+                            @* Description *@
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <h4>More info:</h4>
+                                    <p>abhbadasjdbabdwbjabdwjdbjabjksbdjbwjbdjkawjdwj</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <a class="btn btn-primary py-3 px-5 mt-2" href="~/Home/Index">Explore More</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6 text-end">
+                            <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="~/images/about-1.jpg" style="margin-top: 25%;">
+                        </div>
+                        <div class="col-6 text-start">
+                            <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="~/images/about-2.jpg">
+                        </div>
+                        <div class="col-6 text-end">
+                            <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="~/images/about-3.jpg">
+                        </div>
+                        <div class="col-6 text-start">
+                            <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="~/images/about-4.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    <!-- Testimonial Start -->
+    <div class="container-xxl testimonial mt-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="owl-carousel testimonial-carousel py-5">
+                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
+                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-1.jpg" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h6 class="fw-bold mb-1">Client Name</h6>
+                            <small>Profession</small>
+                        </div>
+                    </div>
+                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+                </div>
+                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
+                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-2.jpg" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h6 class="fw-bold mb-1">Client Name</h6>
+                            <small>Profession</small>
+                        </div>
+                    </div>
+                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+                </div>
+                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
+                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-3.jpg" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h6 class="fw-bold mb-1">Client Name</h6>
+                            <small>Profession</small>
+                        </div>
+                    </div>
+                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+</div>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<WebApplication1.Models.Dichvu> //khai báo 1 list DichVu
+@{
+    var count = Model.Count();
+}
+
+
+<div class="col-sm-4 wow fadeIn" data-wow-delay="0.5s">
+    <div class="border rounded p-1">
+        <div class="border rounded text-center p-4">
+            <i class="fa fa-users fa-2x text-primary mb-2"></i>
+            <h2 class="mb-1" data-toggle="counter-up">@count</h2>
+            <p class="mb-0">Service</p>
+        </div>
+    </div>
+</div>

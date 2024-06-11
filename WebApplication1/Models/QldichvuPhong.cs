@@ -11,7 +11,7 @@ namespace WebApplication1.Models
         public string? Sotien { get; set; }
         public string? Soluong { get; set; }
 
-        public virtual DichVu? MaDvNavigation { get; set; }
+        public virtual Dichvu? MaDvNavigation { get; set; }
         public virtual Phong? MaPhongNavigation { get; set; }
     }
 }

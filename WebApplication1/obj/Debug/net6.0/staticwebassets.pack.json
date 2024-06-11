@@ -341,6 +341,14 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\lib\\multiple-select\\multiple-select.min.css",
+      "PackagePath": "staticwebassets\\lib\\multiple-select\\multiple-select.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\lib\\multiple-select\\multiple-select.min.js",
+      "PackagePath": "staticwebassets\\lib\\multiple-select\\multiple-select.min.js"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\lib\\owlcarousel\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\owlcarousel"
     },
