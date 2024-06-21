@@ -33,7 +33,18 @@ namespace WebApplication1.DAL
 
         public void UpdateStaff(NhanVien nhanVien)
         {
-            _context.Entry(nhanVien).State = EntityState.Modified;
+            //_context.Entry(nhanVien).State = EntityState.Modified;
+            var existingStaff = _context.NhanViens.Find(nhanVien.MaNv);
+            if (existingStaff != null)
+            {
+                existingStaff.TenNv = nhanVien.TenNv;
+                existingStaff.Chucvu = nhanVien.Chucvu;
+                existingStaff.Cancuoc = nhanVien.Cancuoc;
+                existingStaff.Phone = nhanVien.Phone;
+                existingStaff.TrangThai = nhanVien.TrangThai;
+
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteStaff(int MaNv)

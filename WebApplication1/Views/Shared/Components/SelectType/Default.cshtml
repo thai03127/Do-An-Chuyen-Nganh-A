@@ -1,0 +1,95 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var selected = 0;
+}
+@model IEnumerable<WebApplication1.Models.LoaiPhong>;
+
+   
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="form-floating">
+            <select class="form-select" id="select3" name="selRoomType">
+                <option value="0">Selct type room</option>
+                <option value="1">Standard</option>
+                <option value="2">Superior</option>
+                <option value="3">Deluxe</option>
+                <option value="4">Suite</option>
+
+            </select>
+
+            <label for="select3">Select A Room</label>
+           
+        </div>
+       
+    </div>
+
+    <div id="priceInfoContainer">
+        @foreach (var t in Model)
+        {
+            if (selected == t.MaLoai)
+            {
+                <div class="col-md-6 priceInfo">
+                    <div class="form-floating">
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <div style="border-right: 1px solid #000; padding: 10px; margin-right: 5px;">
+                                <h4>Price</h4>
+                                <p>@t.Gia</p>
+                            </div>
+                            <div style="padding-left: 5px;">
+                                <p><strong>Giá gốc:</strong> @t.GiaGoc/night</p>
+                                <p><strong>Giá giảm:</strong> @t.GiaGiam/night</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+    @section Scripts {
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" on-content-loaded="true">
+            alert("Đã nhấn phím Enter!");
+           
+        </script>
+
+    }
+
+
+    @* <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+    var quantityRoomInput = document.getElementById("select3");
+    alert(quantityRoomInput.val)
+    }
+    $(document).ready(function () {
+    alert("Tới đây ròi nè")
+    $('#select3').change(function () {
+    selected = $(this).val();
+    alert (selected)
+    $.ajax({
+    data: { roomType: selectedValue },
+    success: function (response) {
+    // Xử lý phản hồi từ server (nếu cần)
+    $('#priceInfoContainer').html(response);
+    },
+    error: function (error) {
+    // Xử lý lỗi (nếu có)
+    console.error(error);
+    }
+    });
+    });
+    });
+    </script>*@
+    @*   <div class="col-md-6">
+    <div class="form-floating">
+    <h4>Price</h4>
+    <p>123.456 VND/night</p>
+    </div>
+    </div> *@
+
+
+
+</div>

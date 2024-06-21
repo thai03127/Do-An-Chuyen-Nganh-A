@@ -32,7 +32,15 @@ namespace WebApplication1.DAL
 
         public void UpdatePhong(Phong phong)
         {
-            _context.Entry(phong).State = EntityState.Modified;
+            //_context.Entry(phong).State = EntityState.Modified;
+            var existingRoom = _context.Phongs.Find(phong.MaPhong);
+            if (existingRoom != null)
+            {
+                existingRoom.TenPhong = phong.TenPhong;
+                existingRoom.MaLoai = phong.MaLoai;
+
+                _context.SaveChanges();
+            }
         }
 
         public void DeletePhong(int MaPhong)

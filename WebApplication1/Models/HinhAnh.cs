@@ -7,6 +7,7 @@ namespace WebApplication1.Models
     {
         public int MaHinhAnh { get; set; }
         public int? MaLoai { get; set; }
+        public string? Hinh { get; set; }
 
         public virtual LoaiPhong? MaLoaiNavigation { get; set; }
     }

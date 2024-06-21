@@ -12,6 +12,8 @@ namespace WebApplication1.Models
         public string TrangThai { get; set; } = null!;
         public int MaNv { get; set; }
         public int Id { get; set; }
+        public int? SoNglon { get; set; }
+        public int? SoTreEm { get; set; }
 
         public virtual Booking MaBookingNavigation { get; set; } = null!;
         public virtual Phong MaPhongNavigation { get; set; } = null!;

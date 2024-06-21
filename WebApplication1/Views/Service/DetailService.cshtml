@@ -1,21 +1,19 @@
 ﻿
 @{
-    var serviceName = ViewBag.serviceName;
-    var serviceQuantity = ViewBag.serviceQuantity;
 }
-@model List<WebApplication1.Models.Phong>;
+@model WebApplication1.OtherModels.DetailService;
 
 <div class="container-xxl bg-white p-0">
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 p-0" style="background-image: url('@Url.Content("~/images/carousel-1.jpg")');">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center pb-5">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">About Us</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">@Model.info.TenDv</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Services</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">@serviceName</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@Model.info.TenDv</li>
                     </ol>
                 </nav>
             </div>
@@ -31,21 +29,19 @@
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6">
                     <h6 class="section-title text-start text-primary text-uppercase">Detail Service</h6>
-                    <h1 class="mb-4">Introduce about <span class="text-primary text-uppercase">@serviceName</span></h1>
+                    <h1 class="mb-4">Introduce about <span class="text-primary text-uppercase">@Model.info.TenDv</span></h1>
                     <h4>Description:</h4>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                    <p class="mb-4">@Model.info.Mota</p>
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <form>
                             @* Quantity *@
                             <div class="col-md-6">
                                 <h4>Quantity: </h4>
-                                <h5 style="color:chocolate">@serviceQuantity </h5>
+                                <h5 style="color:chocolate">@Model.info.SoLuong </h5>
                             </div>
-                            @* Description *@
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <h4>More info:</h4>
-                                    <p>abhbadasjdbabdwbjabdwjdbjabjksbdjbwjbdjkawjdwj</p>
+                                    <h4>More info. Press!!</h4>
                                 </div>
                             </div>
                         </form>
@@ -77,34 +73,34 @@
         <div class="container">
             <div class="owl-carousel testimonial-carousel py-5">
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>DACNA Hotel has proven itself to be one of the top hotels in VietNam with its excellent service quality. The rooms are not only clean and spacious but also designed with high aesthetic standards. Amenities like the pool, spa, and restaurant meet international standards. The friendly and enthusiastic staff is one of the key highlights that make this hotel successful. </p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-1.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Nguyen Anh Thy</h6>
+                            <small>Service Critic</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
                 </div>
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>DACNA Hotel is a standout in the hospitality industry in VietNam. The hotel not only boasts a prime location but also offers excellent service quality. The rooms are luxuriously designed, well-equipped, and ensure maximum comfort for guests. The professional and friendly staff is a big plus. This is a perfect choice for tourists and business travelers.</p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-2.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Mike Tyson</h6>
+                            <small>Travel Expert</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
                 </div>
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>I had a wonderful stay at DACNA Hotel. The rooms were very clean and well-equipped, with comfortable beds. Room service was always prompt and professional. The hotel's location is also very convenient for getting to popular tourist destinations. I will definitely return here on my next trips. This is definitely an ideal place for anyone to stay here. I love there so much.</p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-3.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Le Quang Minh</h6>
+                            <small>Customer</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>

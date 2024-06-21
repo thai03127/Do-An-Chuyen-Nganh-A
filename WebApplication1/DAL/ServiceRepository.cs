@@ -30,7 +30,16 @@ namespace WebApplication1.DAL
 
         public void UpdateDichVu(Dichvu dichvu)
         {
-            _context.Entry(dichvu).State = EntityState.Modified;
+            //_context.Entry(dichvu).State = EntityState.Modified;
+            var existingService = _context.Dichvus.Find(dichvu.MaDv);
+            if (existingService != null)
+            {
+                existingService.TenDv = dichvu.TenDv;
+                existingService.SoLuong = dichvu.SoLuong;
+                existingService.Mota = dichvu.Mota;
+
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteDichVu(int MaDv)

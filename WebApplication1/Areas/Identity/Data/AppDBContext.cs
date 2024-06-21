@@ -25,19 +25,19 @@ public partial class AppDBContext : IdentityDbContext<AppUser>
                 .HasMaxLength(10)
                 .IsFixedLength();
 
-            entity.Property(e => e.Gia)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            //entity.Property(e => e.Gia)
+            //    .HasMaxLength(10)
+            //    .IsFixedLength();
 
-            entity.Property(e => e.GiaGiam)
-                .HasMaxLength(10)
-                .HasColumnName("Gia Giam")
-                .IsFixedLength();
+            //entity.Property(e => e.GiaGiam)
+            //    .HasMaxLength(10)
+            //    .HasColumnName("Gia Giam")
+            //    .IsFixedLength();
 
-            entity.Property(e => e.GiaGoc)
-                .HasMaxLength(10)
-                .HasColumnName("Gia Goc")
-                .IsFixedLength();
+            //entity.Property(e => e.GiaGoc)
+            //    .HasMaxLength(10)
+            //    .HasColumnName("Gia Goc")
+            //    .IsFixedLength();
 
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
 
@@ -60,11 +60,11 @@ public partial class AppDBContext : IdentityDbContext<AppUser>
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Booking_KhachHang");
 
-            entity.HasOne(d => d.MaLoaiNavigation)
-                .WithMany(p => p.Bookings)
-                .HasForeignKey(d => d.MaLoai)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Booking_LoaiPhong");
+            //entity.HasOne(d => d.MaLoaiNavigation)
+            //    .WithMany(p => p.Bookings)
+            //    .HasForeignKey(d => d.MaLoai)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Booking_LoaiPhong");
 
             entity.HasOne(d => d.MaNvNavigation)
                 .WithMany(p => p.Bookings)

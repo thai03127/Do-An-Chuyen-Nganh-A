@@ -32,7 +32,21 @@ namespace WebApplication1.DAL
 
         public void UpdateLoaiPhong(LoaiPhong loaiPhong)
         {
-            _context.Entry(loaiPhong).State = EntityState.Modified;
+            //_context.Entry(loaiPhong).State = EntityState.Modified;
+            var existingTypeRoom = _context.LoaiPhongs.Find(loaiPhong.MaLoai);
+            if (existingTypeRoom != null)
+            {
+                existingTypeRoom.Ten = loaiPhong.Ten;
+                existingTypeRoom.GiaGoc = loaiPhong.GiaGoc;
+                existingTypeRoom.GiaGiam = loaiPhong.GiaGiam;
+                existingTypeRoom.Gia = loaiPhong.Gia;
+                existingTypeRoom.GiaTreEm = loaiPhong.GiaTreEm;
+                existingTypeRoom.DanhGia = loaiPhong.DanhGia;
+                existingTypeRoom.Soluong = loaiPhong.Soluong;
+                existingTypeRoom.Mota = loaiPhong.Mota;
+
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteLoaiPhong(int MaLoai)
@@ -48,37 +62,5 @@ namespace WebApplication1.DAL
         {
             _context.SaveChanges();
         }
-
-        //LoaiPhong ITypeRoomRepository.GetLoaiPhongById(int MaLoai)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-
-        //public IEnumerable<Phong> GetAllPhongs()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Phong GetPhongById(int MaPhong)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void InsertPhong(Phong phong)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void UpdatePhong(Phong phong)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void DeletePhong(int MaPhong)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

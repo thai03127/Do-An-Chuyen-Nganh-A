@@ -15,7 +15,6 @@ namespace WebApplication1.Models
         public int? Passport { get; set; }
         public int Cancuoc { get; set; }
         public int Phone { get; set; }
-        //public string Email { get; set; } // Cột mới
 
         public virtual ICollection<Booking> Bookings { get; set; }
     }

@@ -12,11 +12,18 @@ namespace WebApplication1.Controllers
         private readonly ILogger<HomeController> _logger;
         //private readonly HotelDatabaseContext _dbContext; // những thuộc tính private sẽ gạch dưới
         private readonly IBookingRepository _bookingRepository;
+        private readonly ITypeRoomRepository _typeRoomRepository;
 
-        public HomeController(ILogger<HomeController> logger, IBookingRepository bookingRepository)
+        public HomeController(ILogger<HomeController> logger, IBookingRepository bookingRepository, ITypeRoomRepository typeRoomRepository)
         {
             _logger = logger;
             _bookingRepository = bookingRepository;
+            _typeRoomRepository = typeRoomRepository;
+        }
+
+        public IActionResult SelectTypeRoom()
+        {
+            return ViewComponent("SelectType");
         }
         public IActionResult Index()
         {
@@ -43,12 +50,12 @@ namespace WebApplication1.Controllers
         //repository 
         //BOOKING
         // GETALL: /Services/
-        public IActionResult Booking(int id)
+        public IActionResult Booking()
         {
-            var bookings = _bookingRepository.GetAllBookings();
-            //var dichVus = from s in _serviceRepository.GetAllDichVus()
-            //               select s;
-            return View(bookings);
+            //var bookings = _bookingRepository.GetAllBookings();
+            ////var dichVus = from s in _serviceRepository.GetAllDichVus()
+            ////               select s;
+            return View();
         }
         // SEARCH: /DetailService/
         public IActionResult DetailBooking(int MaBooking)
@@ -68,7 +75,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaBooking,MaKh,MaLoai, NgayIn, NgayOut, Gia, GiaGoc,GiaGiam, MaNv, TrangThai, Datcoc")] Booking booking)
+        public IActionResult Create([Bind("MaBooking,MaKh, NgayIn, NgayOut, MaNv, TrangThai, Datcoc, SlKh")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +98,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int MaBooking, [Bind("MaKh,MaLoai, NgayIn, NgayOut, Gia, GiaGoc,GiaGiam, MaNv, TrangThai, Datcoc")] Booking booking)
+        public IActionResult Edit(int MaBooking, [Bind("MaKh, NgayIn, NgayOut, MaNv, TrangThai, Datcoc, SlKh")] Booking booking)
         {
             if (MaBooking != booking.MaBooking)
             {

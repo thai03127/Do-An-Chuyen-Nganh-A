@@ -1,25 +1,21 @@
 ﻿@* @model List<WebApplication1.Models.LoaiPhong> //khai báo 1 list NhanVien *@
 
 @{
-    var typeName = ViewBag.typeName;
-    var typePrice = ViewBag.typePrice;
-    var typeRate = ViewBag.typeRate;
-    var typeQuantity = ViewBag.typeQuantity;
-    var serviceNames = ViewBag.serviceNames;
+    var index = 1;
 }
-@model List<WebApplication1.Models.Phong>;
+@model WebApplication1.OtherModels.DetailRoom;
 
 <div class="container-xxl bg-white p-0">
 <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 p-0" style="background-image: url('@Url.Content("~/images/carousel-1.jpg")');">
     <div class="container-fluid page-header-inner py-5">
         <div class="container text-center pb-5">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">@typeName</h1>
+            <h1 class="display-3 text-white mb-3 animated slideInDown">@Model.info.Ten</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center text-uppercase">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page">@typeName</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@Model.info.Ten</li>
                 </ol>
             </nav>
         </div>
@@ -34,22 +30,23 @@
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h6 class="section-title text-center text-primary text-uppercase">Detail Room</h6>
-            <h1 class="mb-5">Welcome to <span class="text-primary text-uppercase">@typeName Room</span></h1>
+                <h1 class="mb-5">Welcome to <span class="text-primary text-uppercase">@Model.info.Ten Room</span></h1>
         </div>
         <div class="row g-5">
             <div class="col-lg-6">
                 <div class="row g-3">
+                    
                     <div class="col-6 text-end">
-                        <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="~/images/about-1.jpg" style="margin-top: 25%;">
+                        <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="@Model.image[0]" style="margin-top: 25%;">
                     </div>
                     <div class="col-6 text-start">
-                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="~/images/about-2.jpg">
+                            <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="@Model.image[1]">
                     </div>
                     <div class="col-6 text-end">
-                        <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="~/images/about-3.jpg">
+                            <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="@Model.image[2]">
                     </div>
                     <div class="col-6 text-start">
-                        <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="~/images/about-4.jpg">
+                            <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="@Model.image[3]">
                     </div>
                 </div>
             </div>
@@ -60,13 +57,13 @@
                                 @* Name *@
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                        <h3 style="color:#008B8B;">@typeName Room</h3>
+                                        <h3 style="color:#008B8B;">@Model.info.Ten Room</h3>
                                 </div>
                             </div>
                                 @* Price *@
                              <div class="col-md-6">
                                 <div class="form-floating">
-                                        <h5 style ="background-color:tomato;">Price: @typePrice VND/night</h5>
+                                        <h5 style ="background-color:tomato;">Price: @Model.info.Gia VND/night</h5>
                                 </div>
                             </div>
                                 @* Rating *@
@@ -76,9 +73,9 @@
                                         <div class="ps-2">
                                             @{
                                                 // Phần nguyên của rating
-                                                int fullStars = (int)Math.Floor(typeRate);
+                                                int fullStars = (int)Math.Floor((decimal)Model.info.DanhGia);
                                                 // Phần thập phân của rating
-                                                double fractionalPart = typeRate - fullStars;
+                                                double fractionalPart = (double)Model.info.DanhGia - fullStars;
 
                                                 // Hiển thị sao đầy đủ
                                                 for (int i = 0; i < fullStars; i++)
@@ -103,7 +100,7 @@
                                 @* Quantity *@
                             <div class="col-md-6">
                                     <h4>Quantity: </h4>
-                                    <h5 style="color:chocolate">@typeQuantity Room</h5>
+                                    <h5 style="color:chocolate">@Model.info.Soluong Room</h5>
                             </div> 
                                 @* Services *@
                             <div class="col-12">
@@ -112,10 +109,10 @@
                                         <p style="color: brown">
                                             @{
                                                 int count = 0;
-                                                foreach (var name in serviceNames)
+                                                foreach (var name in Model.service)
                                                 {
                                                     @name
-                                                    if (count < serviceNames.Count - 1)
+                                                    if (count < Model.service.Count() - 1)
                                                     {
                                                         <text>, </text>
                                                     }
@@ -137,7 +134,7 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <h4>Description:</h4>
-                                    <p>abhbadasjdbabdwbjabdwjdbjabjksbdjbwjbdjkawjdwj</p>
+                                    <p>@Model.info.Mota</p>
                                 </div>
                             </div>
                                 @* Booking Button *@
@@ -157,34 +154,34 @@
         <div class="container">
             <div class="owl-carousel testimonial-carousel py-5">
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>DACNA Hotel has proven itself to be one of the top hotels in VietNam with its excellent service quality. The rooms are not only clean and spacious but also designed with high aesthetic standards. Amenities like the pool, spa, and restaurant meet international standards. The friendly and enthusiastic staff is one of the key highlights that make this hotel successful. </p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-1.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Nguyen Anh Thy</h6>
+                            <small>Service Critic</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
                 </div>
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>DACNA Hotel is a standout in the hospitality industry in VietNam. The hotel not only boasts a prime location but also offers excellent service quality. The rooms are luxuriously designed, well-equipped, and ensure maximum comfort for guests. The professional and friendly staff is a big plus. This is a perfect choice for tourists and business travelers.</p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-2.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Mike Tyson</h6>
+                            <small>Travel Expert</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
                 </div>
                 <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
+                    <p>I had a wonderful stay at DACNA Hotel. The rooms were very clean and well-equipped, with comfortable beds. Room service was always prompt and professional. The hotel's location is also very convenient for getting to popular tourist destinations. I will definitely return here on my next trips. This is definitely an ideal place for anyone to stay here. I love there so much.</p>
                     <div class="d-flex align-items-center">
                         <img class="img-fluid flex-shrink-0 rounded" src="~/images/testimonial-3.jpg" style="width: 45px; height: 45px;">
                         <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+                            <h6 class="fw-bold mb-1">Le Quang Minh</h6>
+                            <small>Customer</small>
                         </div>
                     </div>
                     <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>

@@ -7,7 +7,7 @@ namespace WebApplication1.Models
     {
         public LoaiPhong()
         {
-            Bookings = new HashSet<Booking>();
+            BookingDetails = new HashSet<BookingDetail>();
             HinhAnhs = new HashSet<HinhAnh>();
             Phongs = new HashSet<Phong>();
             TienIchPhongs = new HashSet<TienIchPhong>();
@@ -21,8 +21,9 @@ namespace WebApplication1.Models
         public double? DanhGia { get; set; }
         public string? Soluong { get; set; }
         public double? GiaTreEm { get; set; }
+        public string? Mota { get; set; }
 
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<BookingDetail> BookingDetails { get; set; }
         public virtual ICollection<HinhAnh> HinhAnhs { get; set; }
         public virtual ICollection<Phong> Phongs { get; set; }
         public virtual ICollection<TienIchPhong> TienIchPhongs { get; set; }

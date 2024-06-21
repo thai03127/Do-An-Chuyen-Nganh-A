@@ -29,53 +29,63 @@ namespace WebApplication1.Controllers
         //SERVICE
         private readonly IServiceRepository _serviceRepository;
         private readonly ITypeRoomRepository _typeRoomRepository;
-        private readonly IRoomRepository _roomRepository;
+        private readonly IImageRepository _imageRepository;
 
-        List<Detail> details = new List<Detail>();
-        public ServiceController(IServiceRepository serviceRepository, ITypeRoomRepository typeRoomRepository, IRoomRepository roomRepository)
+        DetailRoom details;
+        DetailService detailService;
+
+
+        public ServiceController(IServiceRepository serviceRepository, ITypeRoomRepository typeRoomRepository, IImageRepository imageRepository)
         {
             _serviceRepository = serviceRepository;
             _typeRoomRepository = typeRoomRepository;
-            _roomRepository = roomRepository;
+            _imageRepository = imageRepository;
         }
 
         public IActionResult DetailRoom(int id)
         {
-            ViewBag.typeName = _typeRoomRepository.GetLoaiPhongById(id).Ten;
-            ViewBag.typePrice = _typeRoomRepository.GetLoaiPhongById(id).GiaGiam;
-            ViewBag.typeRate = _typeRoomRepository.GetLoaiPhongById(id).DanhGia;
-            ViewBag.typeQuantity = _typeRoomRepository.GetLoaiPhongById(id).Soluong;
-            ViewBag.serviceNames = _serviceRepository.GetAllDichVuNames();
-            var room = from p in _roomRepository.GetAllPhongs()
-                       where p.MaLoai == id
-                       select p;
-            return View(room.ToList());
+            var type = _typeRoomRepository.GetLoaiPhongById(id);
+            var serviceNames = _serviceRepository.GetAllDichVuNames();
+            var image = _imageRepository.GetHinhAnhsByMaLoai(id);
+            string[] img = new string[4];
+            var index = 0;
+            foreach (var i in image)
+            {
+                img[index] = i.Hinh;
+                index++; 
+            }
+            details = new DetailRoom { info = type, service = serviceNames, image = img };
+            return View(details);
         }
 
         public IActionResult DetailService(int id)
         {
             var service = _serviceRepository.GetDichVuById(id);
-            if (service == null)
-            {
-                // Handle the case where the service is not found
-                return NotFound();
-            }
+            detailService  = new DetailService { info = service };
+            return View(detailService);
+            //var service = _serviceRepository.GetDichVuById(id);
+            //if (service == null)
+            //{
+            //    // Handle the case where the service is not found
+            //    return NotFound();
+            //}
 
-            ViewBag.serviceName = service.TenDv;
-            ViewBag.serviceQuantity = service.SoLuong;
+            //ViewBag.serviceName = service.TenDv;
+            //ViewBag.serviceQuantity = service.SoLuong;
+            //ViewBag.serviceDescription = service.Mota;
 
-            var rooms = _roomRepository.GetAllPhongs();
-            if (rooms == null)
-            {
-                // Handle the case where rooms list is not found or is null
-                return NotFound();
-            }
+            //var rooms = _roomRepository.GetAllPhongs();
+            //if (rooms == null)
+            //{
+            //    // Handle the case where rooms list is not found or is null
+            //    return NotFound();
+            //}
 
-            var filteredRooms = from p in rooms
-                                where p.MaLoai == id
-                                select p;
+            //var filteredRooms = from p in rooms
+            //                    where p.MaLoai == id
+            //                    select p;
 
-            return View(filteredRooms.ToList());
+            //return View(filteredRooms.ToList());
         }
 
         // GETALL: /Services/
@@ -106,7 +116,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaDv,TenDv,SoLuong")] Dichvu dichVu)
+        public IActionResult Create([Bind("MaDv,TenDv,SoLuong, Mota")] Dichvu dichVu)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +141,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int MaDv, [Bind("TenDv,SoLuong")] Dichvu dichVu)
+        public IActionResult Edit(int MaDv, [Bind("TenDv,SoLuong, Mota")] Dichvu dichVu)
         {
             if (MaDv != dichVu.MaDv)
             {
@@ -214,7 +224,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaPhong,TenPhong,MaLoai")] LoaiPhong loaiPhong)
+        public IActionResult Create([Bind("MaLoai,Ten, Gia, GiaGoc, GiaGiam, DanhGia, Soluong, GiaTreEm, Mota")] LoaiPhong loaiPhong)
         {
             if (ModelState.IsValid)
             {
@@ -239,7 +249,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int MaLoai, [Bind("TenPhong,MaLoai")] LoaiPhong loaiPhong)
+        public IActionResult Edit(int MaLoai, [Bind("Ten, Gia, GiaGoc, GiaGiam, DanhGia, Soluong, GiaTreEm,Mota")] LoaiPhong loaiPhong)
         {
             if (MaLoai != loaiPhong.MaLoai)
             {

@@ -1,24 +1,24 @@
-﻿@model IEnumerable<WebApplication1.Models.LoaiPhong> //khai báo 1 list LoaiPhong
+﻿@model List<WebApplication1.OtherModels.DetailType> //khai báo 1 list LoaiPhong
 
     @foreach (var p in Model)
     {
     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
         <div class="room-item shadow rounded overflow-hidden">
             <div class="position-relative">
-                <img class="img-fluid" src="~/images/room-1.jpg" alt="">
-                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">@p.GiaGiam VND/Night</small>
+                <img class="img-fluid" src="@p.hinh" alt="No Image">
+                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">@p.info.GiaGiam VND/Night</small>
             </div>
             <div class="p-4 mt-2">
                 <div class="d-flex justify-content-between mb-3">
-                    <h5 class="mb-0">@p.Ten</h5>
+                    <h5 class="mb-0">@p.info.Ten</h5>
                     <div class="ps-2">
                         @{
-                            if (p.DanhGia.HasValue)
+                            if (p.info.DanhGia.HasValue)
                             {
                                 // Phần nguyên của rating
-                                int fullStars = (int)Math.Floor(p.DanhGia.Value);
+                                int fullStars = (int)Math.Floor(p.info.DanhGia.Value);
                                 // Phần thập phân của rating
-                                double fractionalPart = p.DanhGia.Value - fullStars;
+                                double fractionalPart = p.info.DanhGia.Value - fullStars;
 
                                 // Hiển thị sao đầy đủ
                                 for (int i = 0; i < fullStars; i++)
@@ -50,13 +50,13 @@
                     </div>
                 </div>
                 <div class="d-flex mb-3">
-                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>1 Bed</small>
                     <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
                     <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                 </div>
-                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                @* <p class="text-body mb-3">@p.Mota</p> *@ @* Description *@
                 <div class="d-flex justify-content-between">
-                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="~/Service/DetailRoom/@p.MaLoai" >View Detail</a>
+                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="~/Service/DetailRoom/@p.info.MaLoai" >View Detail</a>
                     <a class="btn btn-sm btn-dark rounded py-2 px-4" href="~/Home/Booking">Book Now</a>
                 </div>
             </div>

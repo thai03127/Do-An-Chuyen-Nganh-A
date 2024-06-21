@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebApplication1.Models;
 
-namespace WebApplication1.Data
+namespace WebApplication1.Models
 {
     public partial class HotelDatabaseContext : DbContext
     {
@@ -24,10 +23,13 @@ namespace WebApplication1.Data
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
         public virtual DbSet<Booking> Bookings { get; set; } = null!;
+        public virtual DbSet<BookingDetail> BookingDetails { get; set; } = null!;
         public virtual DbSet<Checkin> Checkins { get; set; } = null!;
+        public virtual DbSet<ClassifyRoom> ClassifyRooms { get; set; } = null!;
         public virtual DbSet<Dichvu> Dichvus { get; set; } = null!;
         public virtual DbSet<HinhAnh> HinhAnhs { get; set; } = null!;
         public virtual DbSet<HoaDon> HoaDons { get; set; } = null!;
+        public virtual DbSet<InformRoom> InformRooms { get; set; } = null!;
         public virtual DbSet<KhachHang> KhachHangs { get; set; } = null!;
         public virtual DbSet<LoaiPhong> LoaiPhongs { get; set; } = null!;
         public virtual DbSet<NhanVien> NhanViens { get; set; } = null!;
@@ -56,7 +58,6 @@ namespace WebApplication1.Data
                 entity.Property(e => e.Name).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
-
             });
 
             modelBuilder.Entity<AspNetRoleClaim>(entity =>
@@ -147,20 +148,6 @@ namespace WebApplication1.Data
                     .HasMaxLength(10)
                     .IsFixedLength();
 
-                entity.Property(e => e.Gia)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.GiaGiam)
-                    .HasMaxLength(10)
-                    .HasColumnName("Gia Giam")
-                    .IsFixedLength();
-
-                entity.Property(e => e.GiaGoc)
-                    .HasMaxLength(10)
-                    .HasColumnName("Gia Goc")
-                    .IsFixedLength();
-
                 entity.Property(e => e.MaNv).HasColumnName("MaNV");
 
                 entity.Property(e => e.NgayIn)
@@ -172,6 +159,8 @@ namespace WebApplication1.Data
                     .HasMaxLength(10)
                     .IsFixedLength();
 
+                entity.Property(e => e.SlKh).HasColumnName("Sl_Kh");
+
                 entity.Property(e => e.TrangThai)
                     .HasMaxLength(10)
                     .IsFixedLength();
@@ -182,17 +171,26 @@ namespace WebApplication1.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Booking_KhachHang");
 
-                entity.HasOne(d => d.MaLoaiNavigation)
-                    .WithMany(p => p.Bookings)
-                    .HasForeignKey(d => d.MaLoai)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Booking_LoaiPhong");
-
                 entity.HasOne(d => d.MaNvNavigation)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.MaNv)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Booking_NhanVien");
+            });
+
+            modelBuilder.Entity<BookingDetail>(entity =>
+            {
+                entity.ToTable("BookingDetail");
+
+                entity.HasOne(d => d.MaBookingNavigation)
+                    .WithMany(p => p.BookingDetails)
+                    .HasForeignKey(d => d.MaBooking)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_BookingID");
+
+                entity.HasOne(d => d.MaLoaiNavigation)
+                    .WithMany(p => p.BookingDetails)
+                    .HasForeignKey(d => d.MaLoai)
+                    .HasConstraintName("fk_LoaiPhongID");
             });
 
             modelBuilder.Entity<Checkin>(entity =>
@@ -224,6 +222,25 @@ namespace WebApplication1.Data
                     .HasConstraintName("FK_Checkin_Phong");
             });
 
+            modelBuilder.Entity<ClassifyRoom>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("classify_room");
+
+                entity.Property(e => e.Ten)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.TenPhong)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TrangThai)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Dichvu>(entity =>
             {
                 entity.HasKey(e => e.MaDv);
@@ -233,8 +250,6 @@ namespace WebApplication1.Data
                 entity.Property(e => e.TenDv)
                     .HasMaxLength(10)
                     .IsFixedLength();
-                // Bỏ qua navigation property bị xung đột
-                entity.Ignore(e => e.QldichvuPhongs);
             });
 
             modelBuilder.Entity<HinhAnh>(entity =>
@@ -242,6 +257,8 @@ namespace WebApplication1.Data
                 entity.HasKey(e => e.MaHinhAnh);
 
                 entity.ToTable("HinhAnh");
+
+                entity.Property(e => e.Hinh).HasMaxLength(100);
 
                 entity.HasOne(d => d.MaLoaiNavigation)
                     .WithMany(p => p.HinhAnhs)
@@ -258,6 +275,38 @@ namespace WebApplication1.Data
                 entity.Property(e => e.MaHd).HasColumnName("MaHD");
 
                 entity.Property(e => e.MaQldv).HasColumnName("MaQLDv");
+            });
+
+            modelBuilder.Entity<InformRoom>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("inform_room");
+
+                entity.Property(e => e.KhachHangDaiDien)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NgayIn)
+                    .HasMaxLength(10)
+                    .HasColumnName("NgayIN")
+                    .IsFixedLength();
+
+                entity.Property(e => e.NgayOut)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Ten)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.TenPhong)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TrangThai)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<KhachHang>(entity =>
@@ -280,6 +329,8 @@ namespace WebApplication1.Data
                 entity.Property(e => e.Gia)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.Mota).HasMaxLength(400);
 
                 entity.Property(e => e.Soluong)
                     .HasMaxLength(10)
@@ -304,7 +355,6 @@ namespace WebApplication1.Data
 
                 entity.Property(e => e.TenNv)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("TenNV");
             });
 
@@ -328,6 +378,10 @@ namespace WebApplication1.Data
             {
                 entity.ToTable("QLdichvu_phong");
 
+                entity.HasIndex(e => e.MaDv, "IX_QLdichvu_phong_MaDv");
+
+                entity.HasIndex(e => e.MaPhong, "IX_QLdichvu_phong_MaPhong");
+
                 entity.Property(e => e.Soluong)
                     .HasMaxLength(10)
                     .IsFixedLength();
@@ -341,19 +395,10 @@ namespace WebApplication1.Data
                     .HasForeignKey(d => d.MaDv)
                     .HasConstraintName("FK_QLdichvu_phong_Dichvu");
 
-                //entity.HasOne(d => d.MaPhongNavigation)
-                //    .WithMany(p => p.QldichvuPhongs)
-                //    .HasForeignKey(d => d.MaPhong)
-                //    .HasConstraintName("FK_QLdichvu_phong_Phong1");
-                // Bỏ qua navigation property bị xung đột
-                entity.Ignore(e => e.MaPhongNavigation);
-
-                // Cấu hình lại mối quan hệ với Dichvu
-                entity.HasOne(d => d.MaDvNavigation)
+                entity.HasOne(d => d.MaPhongNavigation)
                     .WithMany(p => p.QldichvuPhongs)
-                    .HasForeignKey(d => d.MaDv)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_QldichvuPhong_Dichvu");
+                    .HasForeignKey(d => d.MaPhong)
+                    .HasConstraintName("FK_QLdichvu_phong_Phong1");
             });
 
             modelBuilder.Entity<TienIchPhong>(entity =>
@@ -361,8 +406,6 @@ namespace WebApplication1.Data
                 entity.HasKey(e => new { e.MaLoai, e.MaTn });
 
                 entity.ToTable("TienIchPhong");
-
-                entity.Property(e => e.MaLoai).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.MaTn).HasColumnName("MaTN");
 
@@ -394,9 +437,16 @@ namespace WebApplication1.Data
                 entity.Property(e => e.Gia)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.Ten).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);
+        }
+
+        internal object Entry(object hinhAnh)
+        {
+            throw new NotImplementedException();
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

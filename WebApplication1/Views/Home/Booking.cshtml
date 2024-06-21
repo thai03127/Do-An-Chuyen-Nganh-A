@@ -1,6 +1,13 @@
-﻿@model IEnumerable<WebApplication1.Models.Booking> //khai báo 1 list bookings
-@{
+﻿@{
+    var selectedValue = 0;
 }
+<header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+
+</header>
+
+
 
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5 p-0" style="background-image: url(~/../../images/carousel-1.jpg);">
@@ -21,7 +28,6 @@
 <!-- Booking Start -->
 @await Component.InvokeAsync("BackGroundBooking");
 <!-- Booking End -->
-
 <!-- Booking Main Start -->
 <div class="container-xxl py-5">
     <div class="container">
@@ -48,7 +54,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <form>
+                    <form method="post">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -86,17 +92,65 @@
                                     <label for="phone">Your Phone</label>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <select class="form-select" id="select3">
-                                        <option value="1">Standard</option>
-                                        <option value="2">Superior</option>
-                                        <option value="3">Deluxe</option>
-                                        <option value="4">Suite</option>
-                                    </select>
-                                    <label for="select3">Select A Room</label>
-                                </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Adult</option>
+                                    <option value="1">Adult 1</option>
+                                    <option value="2">Adult 2</option>
+                                    <option value="3">Adult 3</option>
+                                    <option value="4">Adult 4</option>
+                                </select>
                             </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Child</option>
+                                    <option value="1">Child 1</option>
+                                    <option value="2">Child 2</option>
+                                    <option value="3">Child 3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="quantityRoom" placeholder="Input Quantity Room" min="0">
+                            </div>
+                            <div id="partialViewContainer">
+                                @for (int i = 0; i < ViewBag.QuantityRoom; i++)
+                                {
+                                    @await Component.InvokeAsync("SelectType");
+                                }
+                            </div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", async function () {
+                                    var quantityRoomInput = document.getElementById("quantityRoom");
+                                    var partialViewContainer = document.getElementById("partialViewContainer");
+
+                                    quantityRoomInput.addEventListener("change", async function () {
+                                        var inputVal = parseInt(quantityRoomInput.value);
+
+                                        // Clear existing partial views
+                                        while (partialViewContainer.firstChild) {
+                                            partialViewContainer.removeChild(partialViewContainer.lastChild);
+                                        }
+
+                                        if (inputVal > 0) {
+                                            for (var i = 0; i < inputVal; i++) {
+                                                try {
+                                                    var response = await fetch('/Home/SelectTypeRoom');
+                                                    if (!response.ok) {
+                                                        throw new Error('Network response was not ok');
+                                                    }
+                                                    var html = await response.text();
+                                                    var tempDiv = document.createElement('div');
+                                                    tempDiv.innerHTML = html.trim();
+                                                    partialViewContainer.appendChild(tempDiv.firstChild);
+                                                } catch (error) {
+                                                    console.error('Error loading partial view:', error);
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
                             <div class="col-12">
                                 <div class="form-floating">
                                     <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
@@ -113,42 +167,15 @@
         </div>
     </div>
 </div>
-<!-- Booking Main End -->
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">MaBooking</th>
-                <th scope="col">MaKh</th>
-                <th scope="col">MaLoai</th>
-                <th scope="col">NgayIN</th>
-                <th scope="col">NgayOut</th>
-                <th scope="col">Gia</th>
-                <th scope="col">Gia Goc</th>
-                <th scope="col">Gia Giam</th>
-                <th scope="col">MaNV</th>
-                <th scope="col">TrangThai</th>
-                <th scope="col">DatCoc</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in Model)
-            {
-                <tr>
-                    <td>@p.MaBooking</td>
-                    <td>@p.MaKh</td>
-                    <td>@p.MaLoai</td>
-                    <td>@p.NgayIn</td>
-                    <td>@p.NgayOut</td>
-                    <td>@p.Gia</td>
-                    <td>@p.GiaGoc</td>
-                    <td>@p.GiaGiam</td>
-                    <td>@p.MaNv</td>
-                    <td>@p.TrangThai</td>
-                    <td>@p.DatCoc</td>
-                </tr>
-            };
-        </tbody>
-    </table>
-</div>
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" on-content-loaded="true">
+        document.getElementById("test").addEventListener("click", function (event) {
+            alert("Đã nhấn phím Enter!");
+
+        });
+    </script>
+
+}
+<!-- Booking Main End -->

@@ -30,6 +30,8 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ITienNghiRepository, TienNghiRepository>();
 ////-----------------------Identity--------------------
 //// Đăng ký các dịch vụ của Identity
 //builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<HotelDatabaseContext>().AddDefaultTokenProviders();

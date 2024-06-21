@@ -1,8 +1,6 @@
-﻿using System.Data.Entity;
-using WebApplication1.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data; // Giả sử đây là namespace chứa context của bạn
 using WebApplication1.Models;
-using Microsoft.EntityFrameworkCore;
-using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace WebApplication1.DAL
 {
@@ -31,8 +29,21 @@ namespace WebApplication1.DAL
         //Update Booking
         public void UpdateBooking(Booking booking)
         {
-            _context.Entry(booking).State = EntityState.Modified;
+            var existingBooking = _context.Bookings.Find(booking.MaBooking);
+            if (existingBooking != null)
+            {
+                existingBooking.MaKh = booking.MaKh;
+                existingBooking.NgayIn = booking.NgayIn;
+                existingBooking.NgayOut = booking.NgayOut;
+                existingBooking.MaNv = booking.MaNv;
+                existingBooking.TrangThai = booking.TrangThai;
+                existingBooking.DatCoc = booking.DatCoc;
+                existingBooking.SlKh = booking.SlKh;
+
+                _context.SaveChanges();
+            }
         }
+
         //Delete Booking
         public void DeleteBooking(int MaBooking)
         {
@@ -48,6 +59,5 @@ namespace WebApplication1.DAL
             _context.SaveChanges();
         }
 
-        Booking IBookingRepository.GetBookingById(int MaBooking) => throw new NotImplementedException();
     }
 }
