@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mefmW/ZeoxngXYlk5SWTwkegg5F25dEJzfsklSJTWGQ=",
+  "Hash": "tji9uTSq/g9SG4QsYzR9lpOMuRsp8rGB6KypqYiF2Fw=",
   "Source": "WebApplication1",
   "BasePath": "_content/WebApplication1",
   "Mode": "Default",
@@ -1364,6 +1364,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\carousel-2.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\images\\qrcode.jpg",
+      "SourceId": "WebApplication1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\",
+      "BasePath": "_content/WebApplication1",
+      "RelativePath": "images/qrcode.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\qrcode.jpg"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\images\\room-1.jpg",

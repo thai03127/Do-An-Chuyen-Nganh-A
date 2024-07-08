@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using WebApplication1.DAL;
 using WebApplication1.Data;
 using WebApplication1.Models;
+using WebApplication1.OtherModels;
 
 namespace WebApplication1.Controllers
 {
@@ -20,10 +23,32 @@ namespace WebApplication1.Controllers
             _bookingRepository = bookingRepository;
             _typeRoomRepository = typeRoomRepository;
         }
-
-        public IActionResult SelectTypeRoom()
+        //Payment
+        [HttpPost]
+        public IActionResult ConfirmBooking(BookingViewModel bookingViewModel)
         {
-            return ViewComponent("SelectType");
+            // Xử lý và lưu dữ liệu vào cơ sở dữ liệu nếu cần
+
+            // Sử dụng TempData để lưu trữ dữ liệu và chuyển hướng sang trang Payment
+            TempData["BookingData"] = bookingViewModel;
+            return RedirectToAction("Payment");
+        }
+
+        // Phương thức để hiển thị trang thanh toán
+        public IActionResult Payment(string bookingData)
+        {
+            // Giải mã dữ liệu đặt phòng đã được mã hóa
+            var decodedBookingData = Uri.UnescapeDataString(bookingData);
+
+            // Deserialize chuỗi JSON thành BookingViewModel
+            var bookingViewModel = JsonConvert.DeserializeObject<BookingViewModel>(decodedBookingData);
+
+            // Truyền bookingViewModel đến view Payment
+            return View(bookingViewModel);
+        }
+        public IActionResult SelectTypeRoomComponent(int id)
+        {
+            return ViewComponent("SelectType", new { id });
         }
         public IActionResult Index()
         {

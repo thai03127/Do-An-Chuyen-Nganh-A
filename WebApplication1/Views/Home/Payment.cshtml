@@ -1,0 +1,48 @@
+﻿@model WebApplication1.OtherModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Payment Method</h6>
+            <h1 class="mb-5">Book A <span class="text-primary text-uppercase">Luxury Room</span></h1>
+        </div>
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-6 d-flex flex-column">
+                <h4 class="mb-4">Booking Information:</h4>
+                <div class="border p-4 rounded flex-grow-1">
+                    <p><strong>Fullname:</strong> <span style="color:black">@Model.Name</span> </p>
+                    <p><strong>Email:</strong> <span style="color:black">@Model.Email</span></p>
+                    <p><strong>Check-in:</strong> <span style="color:black">@Model.CheckIn</span></p>
+                    <p><strong>Check-out:</strong> <span style="color:black">@Model.CheckOut</span></p>
+                    <p><strong>ID Number:</strong> <span style="color:black">@Model.IDNumber</span></p>
+                    <p><strong>Phone Number:</strong> <span style="color:black">@Model.Phone</span></p>
+                    <p><strong>Request:</strong> <span style="color:black">@Model.Message</span></p>
+                    <p><strong>Total:</strong> <strong style ="color:black">@Model.TotalPrice</strong> </p>
+                    @{
+                        // Tính giá trị Deposit
+                        var total = decimal.Parse(Model.TotalPrice.Replace(" VNĐ", "").Replace(",", ""));
+                        var deposit = total * 0.5m; // Tính 50% của Total
+                    }
+                    <p><strong>Deposit:</strong> <strong style="color:red">@deposit.ToString("N0") VNĐ</strong> </p>
+                    <p style="font-size: small;">*Please check the final booking information before making payment*</p>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex flex-column">
+                <h4 class="mb-4">Pay by scanning the QR code:</h4>
+                <div class="border p-4 rounded flex-grow-1 text-center">
+                    <p><strong>Bank Name:</strong> Tien Phong Bank (TPBank)</p>
+                    <p><strong>Bank Number:</strong> 20112002686</p>
+                    <p><strong>Owner Name:</strong> NGO GIA THAI</p>
+                    <img src="~/images/qrcode.jpg" class="img-fluid" style="max-height:350px; max-width:230px" alt="QR Code" />
+                    <p style="font:small">*Please deposit more than 50% of the total amount to make a reservation with transfers content*</p>
+                    <p style="font:small; color:black">"Name - Phone - Checkin"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\images\\carousel-2.jpg"
     },
     {
+      "Id": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\images\\qrcode.jpg",
+      "PackagePath": "staticwebassets\\images\\qrcode.jpg"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Desktop\\WebApplication1\\WebApplication1\\wwwroot\\images\\room-1.jpg",
       "PackagePath": "staticwebassets\\images\\room-1.jpg"
     },

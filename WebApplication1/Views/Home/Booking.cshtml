@@ -3,11 +3,9 @@
 }
 <header>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   
+ 
 
 </header>
-
-
 
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5 p-0" style="background-image: url(~/../../images/carousel-1.jpg);">
@@ -54,7 +52,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <form method="post">
+                    <form id="bookingForm" method="post">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -112,45 +110,7 @@
                             <div class="col-md-6">
                                 <input type="number" class="form-control" id="quantityRoom" placeholder="Input Quantity Room" min="0">
                             </div>
-                            <div id="partialViewContainer">
-                                @for (int i = 0; i < ViewBag.QuantityRoom; i++)
-                                {
-                                    @await Component.InvokeAsync("SelectType");
-                                }
-                            </div>
-                            <script>
-                                document.addEventListener("DOMContentLoaded", async function () {
-                                    var quantityRoomInput = document.getElementById("quantityRoom");
-                                    var partialViewContainer = document.getElementById("partialViewContainer");
-
-                                    quantityRoomInput.addEventListener("change", async function () {
-                                        var inputVal = parseInt(quantityRoomInput.value);
-
-                                        // Clear existing partial views
-                                        while (partialViewContainer.firstChild) {
-                                            partialViewContainer.removeChild(partialViewContainer.lastChild);
-                                        }
-
-                                        if (inputVal > 0) {
-                                            for (var i = 0; i < inputVal; i++) {
-                                                try {
-                                                    var response = await fetch('/Home/SelectTypeRoom');
-                                                    if (!response.ok) {
-                                                        throw new Error('Network response was not ok');
-                                                    }
-                                                    var html = await response.text();
-                                                    var tempDiv = document.createElement('div');
-                                                    tempDiv.innerHTML = html.trim();
-                                                    partialViewContainer.appendChild(tempDiv.firstChild);
-                                                } catch (error) {
-                                                    console.error('Error loading partial view:', error);
-                                                }
-                                            }
-                                        }
-                                    });
-                                });
-                            </script>
-
+                            <div id="partialViewContainer"></div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
@@ -158,7 +118,10 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">BOOK NOW</button>
+                                <h4>Total Price:<h5 id="totalPrice" style="color:#008B8B" > 0</h5></h4>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" id="submitBtn" type="submit">BOOK NOW</button>
                             </div>
                         </div>
                     </form>
@@ -167,15 +130,131 @@
         </div>
     </div>
 </div>
+<!-- Booking Main End -->
 
+<!-- Modal Start -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Booking Information</h5>
+            </div>
+            <div class="modal-body">
+                <p><strong>Your Name:</strong> <span id="modalName" style="color:black"></span></p>
+                <p><strong>Your Email:</strong> <span id="modalEmail" style="color:black"></span></p>
+                <p><strong>Check In:</strong> <span id="modalCheckIn" style="color:black"></span></p>
+                <p><strong>Check Out:</strong> <span id="modalCheckOut" style="color:black"></span></p>
+                <p><strong>Your ID Number:</strong> <span id="modalID" style="color:black"></span></p>
+                <p><strong>Your Phone:</strong> <span id="modalPhone" style="color:black"></span></p>
+                <p><strong>Special Requests:</strong> <span id="modalMessage" style="color:black"></span></p>
+                <p><strong>Total Price:</strong> <strong id="modalTotalPrice" style="color:red"></strong></p>
+                <small>*Please check the information again before confirming your booking*</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmBookingBtn">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+<!-- Section Script Start -->
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" on-content-loaded="true">
-        document.getElementById("test").addEventListener("click", function (event) {
-            alert("Đã nhấn phím Enter!");
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var quantityRoomInput = document.getElementById("quantityRoom");
+            var partialViewContainer = document.getElementById("partialViewContainer");
+            var submitBtn = document.getElementById("submitBtn");
+            var confirmBookingBtn = document.getElementById("confirmBookingBtn");
 
+            quantityRoomInput.addEventListener("change", async function () {
+                var inputVal = parseInt(quantityRoomInput.value);
+
+                while (partialViewContainer.firstChild) {
+                    partialViewContainer.removeChild(partialViewContainer.lastChild);
+                }
+
+                if (inputVal > 0) {
+                    for (var i = 0; i < inputVal; i++) {
+                        try {
+                            var response = await fetch(`/Home/SelectTypeRoomComponent?index=${i}`);
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            var html = await response.text();
+                            var tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = html.trim();
+                            partialViewContainer.appendChild(tempDiv.firstChild);
+                        } catch (error) {
+                            console.error('Error loading component view:', error);
+                        }
+                    }
+                }
+                updateTotalPrice();
+            });
+
+            partialViewContainer.addEventListener('change', function (event) {
+                if (event.target.classList.contains('room-type')) {
+                    var selectedOption = event.target.querySelector('option:checked');
+                    var price = selectedOption.dataset.price;
+                    var giaGiam = selectedOption.dataset.giaGiam;
+
+                    var priceContainer = event.target.closest('.room-type-container');
+                    priceContainer.querySelector('.room-price').textContent = price;
+                    priceContainer.querySelector('.room-gia-giam').textContent = giaGiam;
+
+                    updateTotalPrice();
+                }
+            });
+
+            function updateTotalPrice() {
+                var totalPrice = 0;
+                document.querySelectorAll('.room-gia-giam').forEach(function (priceElement) {
+                    totalPrice += parseFloat(priceElement.textContent);
+                });
+
+                document.getElementById('totalPrice').textContent = totalPrice.toLocaleString('vi-VN') + ' VNĐ';
+            }
+            
+            submitBtn.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent form submission (if needed)
+
+                document.getElementById('modalName').textContent = document.getElementById('name').value;
+                document.getElementById('modalEmail').textContent = document.getElementById('email').value;
+                document.getElementById('modalCheckIn').textContent = document.getElementById('checkin').value;
+                document.getElementById('modalCheckOut').textContent = document.getElementById('checkout').value;
+                document.getElementById('modalID').textContent = document.getElementById('idnumber').value;
+                document.getElementById('modalPhone').textContent = document.getElementById('phone').value;
+                document.getElementById('modalMessage').textContent = document.getElementById('message').value;
+                document.getElementById('modalTotalPrice').textContent = document.getElementById('totalPrice').textContent;
+
+                var bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+                bookingModal.show();
+            });
+            var confirmBookingBtn = document.getElementById("confirmBookingBtn");
+
+            confirmBookingBtn.addEventListener("click", function () {
+                var bookingData = {
+                    Name: document.getElementById("modalName").textContent,
+                    Email: document.getElementById("modalEmail").textContent,
+                    CheckIn: document.getElementById("modalCheckIn").textContent,
+                    CheckOut: document.getElementById("modalCheckOut").textContent,
+                    IDNumber: document.getElementById("modalID").textContent,
+                    Phone: document.getElementById("modalPhone").textContent,
+                    Message: document.getElementById("modalMessage").textContent,
+                    TotalPrice: document.getElementById("modalTotalPrice").textContent
+                };
+
+                // Mã hóa dữ liệu đặt phòng để truyền làm tham số URL
+                var encodedBookingData = encodeURIComponent(JSON.stringify(bookingData));
+
+                // Chuyển hướng sang trang thanh toán với dữ liệu đặt phòng
+                window.location.href = '/Home/Payment?bookingData=' + encodedBookingData;
+            });
         });
     </script>
-
 }
-<!-- Booking Main End -->

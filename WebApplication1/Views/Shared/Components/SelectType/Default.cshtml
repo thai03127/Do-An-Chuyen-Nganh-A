@@ -6,90 +6,35 @@
 }
 @model IEnumerable<WebApplication1.Models.LoaiPhong>;
 
-   
-
-<div class="row g-3">
+<div class="row g-3 room-type-container">
     <div class="col-md-6">
         <div class="form-floating">
-            <select class="form-select" id="select3" name="selRoomType">
-                <option value="0">Selct type room</option>
-                <option value="1">Standard</option>
-                <option value="2">Superior</option>
-                <option value="3">Deluxe</option>
-                <option value="4">Suite</option>
-
+            <select class="form-select room-type" name="RoomTypes[@ViewBag.Index].Type">
+                <option value="0">Select type room</option>
+                @foreach (var room in Model)
+                {
+                    <option value="@room.MaLoai" data-price="@room.Gia" data-gia-giam="@room.GiaGiam">@room.Ten</option>
+                }
             </select>
-
             <label for="select3">Select A Room</label>
-           
         </div>
-       
     </div>
-
-    <div id="priceInfoContainer">
-        @foreach (var t in Model)
-        {
-            if (selected == t.MaLoai)
-            {
-                <div class="col-md-6 priceInfo">
-                    <div class="form-floating">
-                        <div style="display: flex; align-items: center; justify-content: center;">
-                            <div style="border-right: 1px solid #000; padding: 10px; margin-right: 5px;">
-                                <h4>Price</h4>
-                                <p>@t.Gia</p>
-                            </div>
-                            <div style="padding-left: 5px;">
-                                <p><strong>Giá gốc:</strong> @t.GiaGoc/night</p>
-                                <p><strong>Giá giảm:</strong> @t.GiaGiam/night</p>
-                            </div>
-                        </div>
-                    </div>
+    
+    <div class="col-md-6 priceInfo">
+        <div class="form-floating">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <div style="border-right: 1px solid #000; padding: 10px; margin-right: 5px;">
+                    <h4>Price!!</h4>
+                    <s class="room-price">0</s>
                 </div>
-            }
-
-        }
+                <div style="padding-left: 5px;">
+                    <p> <h5 class="room-gia-giam" style="background-color:tomato;">0</h5> VNĐ/Night </p>
+                    @* <p><strong>Giá giảm:</strong> <span class="room-gia-giam">0</span> VNĐ/Night</p> *@
+                </div>
+            </div>
+        </div>
     </div>
-    @section Scripts {
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type="text/javascript" on-content-loaded="true">
-            alert("Đã nhấn phím Enter!");
-           
-        </script>
-
-    }
-
-
-    @* <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-    var quantityRoomInput = document.getElementById("select3");
-    alert(quantityRoomInput.val)
-    }
-    $(document).ready(function () {
-    alert("Tới đây ròi nè")
-    $('#select3').change(function () {
-    selected = $(this).val();
-    alert (selected)
-    $.ajax({
-    data: { roomType: selectedValue },
-    success: function (response) {
-    // Xử lý phản hồi từ server (nếu cần)
-    $('#priceInfoContainer').html(response);
-    },
-    error: function (error) {
-    // Xử lý lỗi (nếu có)
-    console.error(error);
-    }
-    });
-    });
-    });
-    </script>*@
-    @*   <div class="col-md-6">
-    <div class="form-floating">
-    <h4>Price</h4>
-    <p>123.456 VND/night</p>
-    </div>
-    </div> *@
-
-
-
 </div>
+  
+
+

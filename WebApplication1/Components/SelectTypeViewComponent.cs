@@ -11,10 +11,12 @@ namespace WebApplication1.Components
         {
             _typeRoomRepository = typeRoomRepository;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var loaiPhongList = _typeRoomRepository.GetAllLoaiPhongs(); // Lấy dữ liệu LoaiPhong từ repository
+            ViewBag.Id = id;
             return View(loaiPhongList);
         }
+
     }
 }
